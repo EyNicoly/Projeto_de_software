@@ -46,7 +46,7 @@ const LoginPage = () => {
       
       alert('Login realizado com sucesso!');
       // Redireciona para o dashboard
-      //navigate('/dashboard');
+      navigate('/dashboard');
 
     } catch (error) {
       console.error('Erro no login:', error.response ? error.response.data : error.message);
