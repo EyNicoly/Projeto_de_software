@@ -44,7 +44,7 @@ const LoginPage = () => {
       //const { token } = response.data;
       //localStorage.setItem('token', token);
       
-      alert('Login realizado com sucesso!');
+      // alert('Login realizado com sucesso!');
       // Redireciona para o dashboard
       //navigate('/dashboard');
 
