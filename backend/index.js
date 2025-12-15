@@ -5,7 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config();
 
 
 // Importações do Banco de Dados
@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 // Configuração de Middlewares
 app.use(cors());
 app.use(express.json());
-//kdopdjpjdp
+
 
 
 // Rota de Teste

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Para redirecionar após o login
-import axios from 'axios'; // Para conectar com a API
+import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios'; 
 import '../styles/LoginPage.css';
 import gymImage from '../assets/Gymnastic-bro.svg';
 
@@ -9,7 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // Estados para o formulário de Login
-  const [loginEmail, setLoginEmail] = useState(''); // Alterado de loginUsuario para loginEmail
+  const [loginEmail, setLoginEmail] = useState('');
   const [loginSenha, setLoginSenha] = useState('');
   const [loginError, setLoginError] = useState('');
 
@@ -25,7 +25,7 @@ const LoginPage = () => {
     return re.test(String(email).toLowerCase());
   };
 
-  // --- LÓGICA DE LOGIN COM CONEXÃO AO BACKEND ---
+  // --- LOGIN COM RESET ---
   const handleLogin = async (e) => {
     e.preventDefault();
     if (loginEmail.trim() === '' || loginSenha.trim() === '') {
@@ -34,19 +34,23 @@ const LoginPage = () => {
     setLoginError('');
 
     try {
-      // Faz a chamada para a API de login
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         email: loginEmail,
         password: loginSenha,
       });
+
+      // 🔥 RESET TOTAL: Apaga TUDO do localStorage
+      localStorage.clear();
       
-      // Pega o token da resposta e salva no navegador
-      //const { token } = response.data;
-      //localStorage.setItem('token', token);
-      
-      alert('Login realizado com sucesso!');
-      // Redireciona para o dashboard
-      //navigate('/dashboard');
+      // Salva o email para exibição na tela de perfil
+      localStorage.setItem('userEmail', loginEmail);
+
+      // Salva o novo token do usuário atual
+      const { token } = response.data;
+      localStorage.setItem('token', token);
+
+      // Vai para o dashboard
+      navigate('/dashboard');
 
     } catch (error) {
       console.error('Erro no login:', error.response ? error.response.data : error.message);
@@ -54,10 +58,9 @@ const LoginPage = () => {
     }
   };
 
-  // --- LÓGICA DE CADASTRO COM CONEXÃO AO BACKEND ---
+  // --- REGISTRO ---
   const handleRegister = async (e) => {
     e.preventDefault();
-    // 1. Validações no frontend
     if (regNome.trim() === '' || regEmail.trim() === '' || regSenha.trim() === '' || regConfirmaSenha.trim() === '') {
       return setRegisterError("Todos os campos são obrigatórios");
     }
@@ -73,15 +76,12 @@ const LoginPage = () => {
     setRegisterError('');
 
     try {
-      // 2. Se tudo estiver certo, envia para a API
-      await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         email: regEmail,
         password: regSenha,
-        // (Opcional) No futuro, você pode querer enviar o 'regNome' para o backend também
       });
 
-      alert('Cadastro realizado com sucesso! Por favor, faça o login.');
-      // 3. Muda para o formulário de login para o usuário entrar
+      alert('Cadastro realizado com sucesso! Faça login.');
       setActiveForm('login');
 
     } catch (error) {
@@ -107,7 +107,6 @@ const LoginPage = () => {
             <h1>LOGIN</h1>
             <form onSubmit={handleLogin}>
               <div className="textfield">
-                {/* Alterado para E-mail para corresponder ao backend */}
                 <label htmlFor="login-email">E-mail</label>
                 <input
                   type="email"
