@@ -14,10 +14,11 @@ body {
     height: 100vh;
     background: linear-gradient(135deg, #201b2c, #1c1529);
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centraliza corretamente os dois lados */
     align-items: center;
     position: relative;
     overflow: hidden;
+    gap: 40px; /* Espaçamento sem empurrar nada */
 }
 
 /* Bolhas animadas no fundo */
@@ -45,23 +46,26 @@ body {
 }
 
 .left-login {
-    width: 50vw;
+    width: 40vw; /* Antes 50vw → corrigido */
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 2;
+    overflow: hidden; /* Evita empurrar o card */
 }
 
 .left-login > h1 {
-    font-size: 3vw;
+    font-size: 2.5vw; /* Antes 3vw → corrigido */
     color: #77ffc0;
     animation: float 3s ease-in-out infinite;
 }
 
 .left-login-image {
-    width: 35vw;
+    max-width: 60%; /* Antes 80% → corrigido */
+    height: auto;
+    object-fit: contain;
     animation: float 4s ease-in-out infinite;
 }
 
@@ -72,7 +76,7 @@ body {
 }
 
 .right-login {
-    width: 50vw;
+    width: 45vw; /* Antes 50vw → corrigido */
     height: 100vh;
     display: flex;
     justify-content: center;
